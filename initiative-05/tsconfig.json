@@ -20,7 +20,8 @@
     "components/**/*",
     "views/**/*",
     "tests/**/*",
-    "index.ts"
+    "index.ts",
+    "server.ts"
   ],
   "exclude": [
     "node_modules",
