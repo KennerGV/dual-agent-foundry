@@ -1,0 +1,16 @@
+{
+  "name": "@aegispulse/chaos-verifier",
+  "version": "0.1.0",
+  "description": "Chaos Engineering Simulator & Verifier for AegisPulse",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "typescript": "^5.3.3"
+  }
+}
