@@ -48,7 +48,13 @@ class EvaluationService:
             try:
                 engine_alerts = self.rule_engine.evaluate_all(event, detections)
                 if isinstance(engine_alerts, list):
-                    alerts.extend(engine_alerts)
+                    for a in engine_alerts:
+                        if isinstance(a, AnomalyAlert):
+                            alerts.append(a)
+                        elif hasattr(a, "model_dump"):
+                            alerts.append(AnomalyAlert.model_validate(a.model_dump()))
+                        elif hasattr(a, "__dict__"):
+                            alerts.append(AnomalyAlert(**a.__dict__))
             except Exception:
                 pass
 
