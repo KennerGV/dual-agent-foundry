@@ -1,29 +1,5 @@
-// UI Component Interfaces & Props
+// UI Component Interfaces, Props & Implementations
 
-import type {
-  TelemetryEvent,
-  AnomalyAlert,
-  IncidentRecord,
-  RunbookExecutionRequest,
-  RunbookExecutionResult
-} from "../bff/index.js";
-
-export interface TelemetryPanelProps {
-  events: TelemetryEvent[];
-  selectedService?: string;
-  onRefresh?: () => void;
-  isLoading?: boolean;
-}
-
-export interface AlertsPanelProps {
-  alerts: AnomalyAlert[];
-  onSelectAlert?: (alert: AnomalyAlert) => void;
-  isLoading?: boolean;
-}
-
-export interface IncidentsPanelProps {
-  incidents: IncidentRecord[];
-  onTriggerRunbook: (request: RunbookExecutionRequest) => Promise<RunbookExecutionResult>;
-  onSelectIncident?: (incident: IncidentRecord) => void;
-  isLoading?: boolean;
-}
+export * from "./TelemetryPanel.js";
+export * from "./AlertsPanel.js";
+export * from "./IncidentsPanel.js";
