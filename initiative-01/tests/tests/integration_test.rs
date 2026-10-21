@@ -2,6 +2,10 @@ use initiative_01_api::*;
 use initiative_01_core::*;
 use initiative_01_storage::*;
 use initiative_01_tests::*;
+use std::io::{Read, Write};
+use std::net::{TcpListener, TcpStream};
+use std::sync::{Arc, Mutex};
+use std::thread;
 
 #[test]
 fn test_harness_status() {
@@ -200,5 +204,105 @@ fn test_multiple_events_ingestion_and_wal_buffering() {
         let read_bytes = wal.read_offset(offset, len).expect("Read offset");
         let decompressed = compressor.decompress(&read_bytes).expect("Decompress");
         assert_eq!(String::from_utf8(decompressed).unwrap(), expected_log);
+    }
+}
+
+fn spawn_live_http_server() -> String {
+    let listener = TcpListener::bind("127.0.0.1:0").expect("bind live test listener");
+    let addr = listener.local_addr().unwrap().to_string();
+    let server = Arc::new(TelemetryServer::new());
+    let events: Arc<Mutex<Vec<String>>> = Arc::new(Mutex::new(
+        INITIAL_EVENTS.iter().map(|s| s.to_string()).collect(),
+    ));
+
+    thread::spawn(move || {
+        for stream in listener.incoming().flatten() {
+            let srv = Arc::clone(&server);
+            let evts = Arc::clone(&events);
+            thread::spawn(move || {
+                let mut stream = stream;
+                let mut buf = [0u8; 16384];
+                let n = match stream.read(&mut buf) {
+                    Ok(n) if n > 0 => n,
+                    _ => return,
+                };
+                let req = String::from_utf8_lossy(&buf[..n]);
+                let http_resp = handle_http_request(&srv, &evts, &req);
+                let _ = stream.write_all(http_resp.as_bytes());
+            });
+        }
+    });
+
+    addr
+}
+
+#[test]
+fn test_live_http_server_endpoints() {
+    let addr = spawn_live_http_server();
+
+    // 1. Test GET /healthz
+    {
+        let mut stream = TcpStream::connect(&addr).expect("connect to live server");
+        let req = "GET /healthz HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n";
+        stream.write_all(req.as_bytes()).unwrap();
+
+        let mut resp = String::new();
+        stream.read_to_string(&mut resp).unwrap();
+        assert!(resp.contains("HTTP/1.1 200 OK"));
+        assert!(resp.contains(r#""status":"ok""#));
+        assert!(resp.contains(r#""service":"telemetry-ingestor""#));
+    }
+
+    // 2. Test GET /v1/events
+    {
+        let mut stream = TcpStream::connect(&addr).expect("connect to live server");
+        let req = "GET /v1/events HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n";
+        stream.write_all(req.as_bytes()).unwrap();
+
+        let mut resp = String::new();
+        stream.read_to_string(&mut resp).unwrap();
+        assert!(resp.contains("HTTP/1.1 200 OK"));
+        assert!(resp.contains("evt_9f8a7b6c"));
+    }
+
+    // 3. Test POST /v1/ingest (Valid payload)
+    {
+        let mut stream = TcpStream::connect(&addr).expect("connect to live server");
+        let body = r#"{"event_id":"evt_live_test","timestamp_utc":"2026-10-21T03:15:00Z","source_service":"integration-test","host_id":"node-01","metrics":{"cpu_usage_pct":50.0,"memory_rss_mb":1024,"latency_p99_ms":100.0,"error_rate_pct":0.0},"raw_log":"INFO test log","compression":"lz4"}"#;
+        let req = format!(
+            "POST /v1/ingest HTTP/1.1\r\nHost: localhost\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{}",
+            body.len(),
+            body
+        );
+        stream.write_all(req.as_bytes()).unwrap();
+
+        let mut resp = String::new();
+        stream.read_to_string(&mut resp).unwrap();
+        assert!(resp.contains("HTTP/1.1 200 OK"));
+        assert!(resp.contains(r#""event_id":"evt_live_test""#));
+    }
+
+    // 4. Test POST /v1/ingest (Invalid payload)
+    {
+        let mut stream = TcpStream::connect(&addr).expect("connect to live server");
+        let req = "POST /v1/ingest HTTP/1.1\r\nHost: localhost\r\nContent-Length: 0\r\nConnection: close\r\n\r\n";
+        stream.write_all(req.as_bytes()).unwrap();
+
+        let mut resp = String::new();
+        stream.read_to_string(&mut resp).unwrap();
+        assert!(resp.contains("HTTP/1.1 400 Bad Request"));
+        assert!(resp.contains(r#""error":"invalid telemetry payload""#));
+    }
+
+    // 5. Test Fallback / route
+    {
+        let mut stream = TcpStream::connect(&addr).expect("connect to live server");
+        let req = "GET / HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n";
+        stream.write_all(req.as_bytes()).unwrap();
+
+        let mut resp = String::new();
+        stream.read_to_string(&mut resp).unwrap();
+        assert!(resp.contains("HTTP/1.1 200 OK"));
+        assert!(resp.contains(r#""service":"initiative-01-telemetry-ingestor""#));
     }
 }
