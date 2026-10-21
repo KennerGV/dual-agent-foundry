@@ -30,19 +30,19 @@
     "initiative-03": {
       "name": "incident-orchestrator",
       "language": "Go",
-      "status": "qa-in-progress",
+      "status": "completed",
       "issues": { "J3-Arch": 11, "J3-Core": 12, "J3-Data": 13, "J3-API": 14, "J3-QA": 15 }
     },
     "initiative-04": {
       "name": "chaos-verifier",
       "language": "TypeScript/Node",
-      "status": "qa-in-progress",
+      "status": "completed",
       "issues": { "J4-Arch": 16, "J4-Core": 17, "J4-Runner": 18, "J4-CLI": 19, "J4-QA": 20 }
     },
     "initiative-05": {
       "name": "command-center-ui",
       "language": "TypeScript/React",
-      "status": "squad-in-progress",
+      "status": "qa-in-progress",
       "issues": { "J5-Arch": 21, "J5-BFF": 22, "J5-UI-Core": 23, "J5-Chaos-UI": 24, "J5-QA": 25 }
     }
   },
@@ -236,6 +236,56 @@
       "reviewed_at": "2026-10-21T02:08:26Z",
       "merged_at": "2026-10-21T02:08:34Z",
       "dispatched_issues": []
+    },
+    "45": {
+      "initiative": "initiative-04",
+      "agent": "J4-QA",
+      "status": "MERGED",
+      "merge_commit": "a40fc2d4593ddd72e05369d6f6b2a9a6330a5d1c",
+      "attempts": 1,
+      "reviewed_at": "2026-10-21T03:06:26Z",
+      "merged_at": "2026-10-21T03:06:47Z",
+      "dispatched_issues": []
+    },
+    "46": {
+      "initiative": "initiative-03",
+      "agent": "J3-QA",
+      "status": "MERGED",
+      "merge_commit": "27b1a4fedbbb924c1a7df0cfb0a8b028c275d0e9",
+      "attempts": 1,
+      "reviewed_at": "2026-10-21T03:06:54Z",
+      "merged_at": "2026-10-21T03:07:03Z",
+      "dispatched_issues": []
+    },
+    "47": {
+      "initiative": "initiative-05",
+      "agent": "J5-BFF",
+      "status": "MERGED",
+      "merge_commit": "64f5b8d97ab4c90391861898aaf7dd1b7122fbe1",
+      "attempts": 1,
+      "reviewed_at": "2026-10-21T03:07:11Z",
+      "merged_at": "2026-10-21T03:07:22Z",
+      "dispatched_issues": [25]
+    },
+    "48": {
+      "initiative": "initiative-05",
+      "agent": "J5-Chaos-UI",
+      "status": "MERGED",
+      "merge_commit": "306010cb5ec93c2b04bca8307050252c36838ffc",
+      "attempts": 1,
+      "reviewed_at": "2026-10-21T03:07:32Z",
+      "merged_at": "2026-10-21T03:07:41Z",
+      "dispatched_issues": [25]
+    },
+    "49": {
+      "initiative": "initiative-05",
+      "agent": "J5-UI-Core",
+      "status": "MERGED",
+      "merge_commit": "393fd53ae8ed4b518eb8d133f51e086e2ba08772",
+      "attempts": 1,
+      "reviewed_at": "2026-10-21T03:07:50Z",
+      "merged_at": "2026-10-21T03:08:01Z",
+      "dispatched_issues": [25]
     }
   }
 }
