@@ -7,3 +7,4 @@ edition = "2021"
 initiative-01-core = { path = "../core" }
 initiative-01-storage = { path = "../storage" }
 initiative-01-api = { path = "../api" }
+serde_json = "1.0"

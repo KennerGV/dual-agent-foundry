@@ -28,6 +28,7 @@ dependencies = [
  "initiative-01-api",
  "initiative-01-core",
  "initiative-01-storage",
+ "serde_json",
 ]
 
 [[package]]
