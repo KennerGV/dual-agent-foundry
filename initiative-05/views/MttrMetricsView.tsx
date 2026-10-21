@@ -84,7 +84,7 @@ export const MttrMetricsView: React.FC<MttrMetricsViewProps> = ({
           backgroundColor: isSlaCompliant ? "#ECFDF5" : "#FEF2F2",
           border: isSlaCompliant ? "1px solid #A7F3D0" : "1px solid #FECACA",
           display: "flex",
-          justify: "space-between",
+          justifyContent: "space-between",
           alignItems: "center"
         }}>
           <div>

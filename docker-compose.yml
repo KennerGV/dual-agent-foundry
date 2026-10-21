@@ -1,0 +1,81 @@
+services:
+  telemetry-ingestor:
+    build:
+      context: ./initiative-01
+      dockerfile: Dockerfile
+    container_name: aegispulse-telemetry-ingestor
+    command: ["/app/target/debug/initiative-01-api"]
+    environment:
+      - PORT=8081
+    ports:
+      - "8081:8081"
+    networks:
+      - aegispulse-net
+    restart: unless-stopped
+
+  anomaly-sentinel:
+    build:
+      context: ./initiative-02
+      dockerfile: Dockerfile
+    container_name: aegispulse-anomaly-sentinel
+    command: ["uvicorn", "api.app:app", "--host", "0.0.0.0", "--port", "8082"]
+    ports:
+      - "8082:8082"
+    networks:
+      - aegispulse-net
+    restart: unless-stopped
+
+  incident-orchestrator:
+    build:
+      context: ./initiative-03
+      dockerfile: Dockerfile
+    container_name: aegispulse-incident-orchestrator
+    command: ["/app/server"]
+    environment:
+      - PORT=8083
+    ports:
+      - "8083:8083"
+    networks:
+      - aegispulse-net
+    restart: unless-stopped
+
+  chaos-verifier:
+    build:
+      context: ./initiative-04
+      dockerfile: Dockerfile
+    container_name: aegispulse-chaos-verifier
+    command: ["node", "dist/server.js"]
+    environment:
+      - PORT=8084
+    ports:
+      - "8084:8084"
+    networks:
+      - aegispulse-net
+    restart: unless-stopped
+
+  command-center-ui:
+    build:
+      context: ./initiative-05
+      dockerfile: Dockerfile
+    container_name: aegispulse-command-center-ui
+    command: ["node", "dist/server.js"]
+    environment:
+      - PORT=8080
+      - TELEMETRY_URL=http://telemetry-ingestor:8081
+      - ALERT_URL=http://anomaly-sentinel:8082
+      - INCIDENT_URL=http://incident-orchestrator:8083
+      - CHAOS_URL=http://chaos-verifier:8084
+    ports:
+      - "8080:8080"
+    depends_on:
+      - telemetry-ingestor
+      - anomaly-sentinel
+      - incident-orchestrator
+      - chaos-verifier
+    networks:
+      - aegispulse-net
+    restart: unless-stopped
+
+networks:
+  aegispulse-net:
+    driver: bridge
