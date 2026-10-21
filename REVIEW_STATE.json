@@ -42,7 +42,7 @@
     "initiative-05": {
       "name": "command-center-ui",
       "language": "TypeScript/React",
-      "status": "qa-in-progress",
+      "status": "completed",
       "issues": { "J5-Arch": 21, "J5-BFF": 22, "J5-UI-Core": 23, "J5-Chaos-UI": 24, "J5-QA": 25 }
     }
   },
@@ -286,6 +286,16 @@
       "reviewed_at": "2026-10-21T03:07:50Z",
       "merged_at": "2026-10-21T03:08:01Z",
       "dispatched_issues": [25]
+    },
+    "50": {
+      "initiative": "initiative-05",
+      "agent": "J5-QA",
+      "status": "MERGED",
+      "merge_commit": "3673505e3f1d8a96b28cca085e93b78becddaaf0",
+      "attempts": 1,
+      "reviewed_at": "2026-10-21T04:05:39Z",
+      "merged_at": "2026-10-21T04:06:10Z",
+      "dispatched_issues": []
     }
   }
 }
