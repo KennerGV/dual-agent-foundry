@@ -18,31 +18,31 @@
     "initiative-01": {
       "name": "telemetry-ingestor",
       "language": "Rust",
-      "status": "squad-in-progress",
+      "status": "qa-in-progress",
       "issues": { "J1-Arch": 1, "J1-Core": 3, "J1-Storage": 4, "J1-API": 5, "J1-QA": 6 }
     },
     "initiative-02": {
       "name": "anomaly-sentinel",
       "language": "Python",
-      "status": "squad-in-progress",
+      "status": "qa-in-progress",
       "issues": { "J2-Arch": 2, "J2-Core": 7, "J2-Rules": 8, "J2-API": 9, "J2-QA": 10 }
     },
     "initiative-03": {
       "name": "incident-orchestrator",
       "language": "Go",
-      "status": "arch-dispatched-wave-2",
+      "status": "squad-in-progress",
       "issues": { "J3-Arch": 11, "J3-Core": 12, "J3-Data": 13, "J3-API": 14, "J3-QA": 15 }
     },
     "initiative-04": {
       "name": "chaos-verifier",
       "language": "TypeScript/Node",
-      "status": "arch-dispatched-wave-2",
+      "status": "squad-in-progress",
       "issues": { "J4-Arch": 16, "J4-Core": 17, "J4-Runner": 18, "J4-CLI": 19, "J4-QA": 20 }
     },
     "initiative-05": {
       "name": "command-center-ui",
       "language": "TypeScript/React",
-      "status": "wave-pending",
+      "status": "arch-dispatched-wave-3",
       "issues": { "J5-Arch": 21, "J5-BFF": 22, "J5-UI-Core": 23, "J5-Chaos-UI": 24, "J5-QA": 25 }
     }
   },
@@ -66,6 +66,86 @@
       "reviewed_at": "2026-10-20T23:03:54Z",
       "merged_at": "2026-10-21T00:05:57Z",
       "dispatched_issues": [7, 8, 9, 11, 16]
+    },
+    "28": {
+      "initiative": "initiative-03",
+      "agent": "J3-Arch",
+      "status": "MERGED",
+      "merge_commit": "18992ff5f4698734f4cc8cfc034c88afdf2c8224",
+      "attempts": 1,
+      "reviewed_at": "2026-10-21T01:08:18Z",
+      "merged_at": "2026-10-21T01:08:26Z",
+      "dispatched_issues": [12, 13, 14, 21]
+    },
+    "35": {
+      "initiative": "initiative-04",
+      "agent": "J4-Arch",
+      "status": "MERGED",
+      "merge_commit": "8a0fddf2dcbd6cc916332c46d7036de4cb5d0bec",
+      "attempts": 1,
+      "reviewed_at": "2026-10-21T01:08:34Z",
+      "merged_at": "2026-10-21T01:08:43Z",
+      "dispatched_issues": [17, 18, 19, 21]
+    },
+    "34": {
+      "initiative": "initiative-02",
+      "agent": "J2-Core",
+      "status": "MERGED",
+      "merge_commit": "29f8844d227cf5cc1ad4d1a0d35ad76f5abf8b2d",
+      "attempts": 1,
+      "reviewed_at": "2026-10-21T01:08:53Z",
+      "merged_at": "2026-10-21T01:09:01Z",
+      "dispatched_issues": [10]
+    },
+    "30": {
+      "initiative": "initiative-02",
+      "agent": "J2-Rules",
+      "status": "MERGED",
+      "merge_commit": "dd40f229e9294118d45d897bf943b4a8419b166e",
+      "attempts": 1,
+      "reviewed_at": "2026-10-21T01:09:09Z",
+      "merged_at": "2026-10-21T01:09:17Z",
+      "dispatched_issues": [10]
+    },
+    "33": {
+      "initiative": "initiative-02",
+      "agent": "J2-API",
+      "status": "MERGED",
+      "merge_commit": "43e56a18beda18a6fb0f3085a97482810006bb5a",
+      "attempts": 1,
+      "reviewed_at": "2026-10-21T01:09:26Z",
+      "merged_at": "2026-10-21T01:09:34Z",
+      "dispatched_issues": [10]
+    },
+    "29": {
+      "initiative": "initiative-01",
+      "agent": "J1-API",
+      "status": "MERGED",
+      "merge_commit": "ad965c31543e0cc06bef68ecdf747fc8bae51233",
+      "attempts": 1,
+      "reviewed_at": "2026-10-21T01:09:42Z",
+      "merged_at": "2026-10-21T01:09:53Z",
+      "dispatched_issues": [6]
+    },
+    "31": {
+      "initiative": "initiative-01",
+      "agent": "J1-Core",
+      "status": "MERGED",
+      "merge_commit": "f5e1530286a4da843656efe86c9b51d57c2fac7c",
+      "attempts": 1,
+      "reviewed_at": "2026-10-21T01:10:00Z",
+      "merged_at": "2026-10-21T01:10:11Z",
+      "dispatched_issues": [6]
+    },
+    "32": {
+      "initiative": "initiative-01",
+      "agent": "J1-Storage",
+      "status": "MERGED",
+      "merge_commit": "c277343681d71c8a7723d2da1bfd583c197d65b8",
+      "attempts": 1,
+      "reviewed_at": "2026-10-21T01:10:19Z",
+      "merged_at": "2026-10-21T01:13:25Z",
+      "dispatched_issues": [6]
     }
   }
 }
