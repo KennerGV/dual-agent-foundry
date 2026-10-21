@@ -1,0 +1,9 @@
+[package]
+name = "initiative-01-tests"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+initiative-01-core = { path = "../core" }
+initiative-01-storage = { path = "../storage" }
+initiative-01-api = { path = "../api" }
