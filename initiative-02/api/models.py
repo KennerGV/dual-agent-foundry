@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import List, Optional
 from pydantic import BaseModel, Field
 
@@ -26,9 +26,9 @@ class AnomalyAlert(BaseModel):
     source_event_ids: List[str] = Field(..., description="Lista de IDs de eventos origen")
     source_service: str = Field(..., description="Servicio afectado")
     anomaly_type: str = Field(..., description="Categoría de la anomalía (e.g. LATENCY_SPIKE_AND_ERROR_SURGE)")
-    z_score: float = Field(..., description="Puntaje Z calculated o ponderado")
+    z_score: float = Field(..., description="Puntaje Z calculado o ponderado")
     confidence: float = Field(..., ge=0.0, le=1.0, description="Nivel de confianza entre 0.0 y 1.0")
-    recommended_severity: str = Field(..., description="Nivel de severidad recomendado: SEV-1, SEV-2, SEV-3")
+    recommended_severity: str = Field(..., description="Nivel de severidad recomendado: SEV-1, SEV-2, SEV-3, SEV-4")
 
 
 class DetectionResult(BaseModel):
