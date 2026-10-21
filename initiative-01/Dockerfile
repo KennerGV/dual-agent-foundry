@@ -9,8 +9,8 @@ COPY storage ./storage
 COPY api ./api
 COPY tests ./tests
 
-# Pre-fetch dependencies and build test binaries during docker build
-RUN cargo test --no-run
+# Pre-fetch dependencies and build test and API server binaries during docker build
+RUN cargo test --no-run && cargo build --bin initiative-01-api
 
 # Execute cargo test in offline mode when container starts
 CMD ["cargo", "test", "--offline"]
